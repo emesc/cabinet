@@ -10,29 +10,41 @@ class DocsController < ApplicationController
   end
 
   def new
+    # instance var only for the view template
     @doc = Doc.new
   end
 
   def create
     @doc = Doc.new(doc_params)
     if @doc.save
+      # take us to the doc that's just been created
       redirect_to @doc
     else
+      # render not redirect so that form wont be blank but filled with previous entries; redirect will delete everything on the page
       render 'new'
     end
   end
 
-  def edit    
+  def edit     
   end
 
-  def update   
+  def update
+    if @doc.update(doc_params)
+      # take us to the document that's just been updated
+      redirect_to @doc
+    else
+      render 'edit'
+    end
   end
 
   # def delete
     
   # end
 
-  def destroy      
+  def destroy
+    @doc.destroy
+    # take us to the list of docs
+    redirect_to docs_path     
   end
 
   private
