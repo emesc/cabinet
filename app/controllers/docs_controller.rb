@@ -11,11 +11,11 @@ class DocsController < ApplicationController
 
   def new
     # instance var only for the view template
-    @doc = Doc.new
+    @doc = current_user.docs.build
   end
 
   def create
-    @doc = Doc.new(doc_params)
+    @doc = current_user.docs.build(doc_params)
     if @doc.save
       # take us to the doc that's just been created
       redirect_to @doc
